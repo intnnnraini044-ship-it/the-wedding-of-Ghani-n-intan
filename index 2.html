@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Invitation</title>
+  
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(#f5fff7, #e6f3ec);
+      overflow-x: hidden;
+    }
+    
+    /* OPENING */
+    #opening {
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(rgba(245, 255, 247, .92), rgba(230, 243, 236, .92)),
+        url('https://i.imgur.com/2ZQZKcZ.png') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    #opening .to {
+      font-size: 14px;
+      color: #4f7c6a;
+      margin-bottom: 4px;
+    }
+    
+    #opening .guest {
+      font-size: 22px;
+      font-weight: bold;
+      color: #2f5d50;
+      margin-bottom: 18px;
+    }
+    
+    #opening h1 {
+      color: #2f5d50;
+      font-size: 36px;
+      margin-bottom: 6px;
+    }
+    
+    #opening p {
+      color: #4f7c6a;
+      font-size: 16px;
+    }
+    
+    #opening button {
+      margin-top: 26px;
+      padding: 14px 38px;
+      border-radius: 30px;
+      border: none;
+      background: #3b7a57;
+      color: white;
+      font-size: 16px;
+    }
+    
+    /* CONTENT */
+    #content {
+      display: none;
+      padding: 18px;
+    }
+    
+    /* CANVA */
+    .canva-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 224.89%;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, .15);
+    }
+    
+    .canva-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      pointer-events: auto;
+      transform-origin: center;
+      transform: scale(var(--zoom));
+    }
+    
+    /* MUSIC BUTTON */
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: #3b7a57;
+      color: white;
+      font-size: 20px;
+      z-index: 50;
+    }
+    
+    /* RESPONSIVE ZOOM */
+    :root {
+      --zoom: 1.07;
+    }
+    
+    @media (max-width: 768px) {
+      :root {
+        --zoom: 1.12;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  
+  <!-- OPENING -->
+  <div id="opening">
+    <div class="to">Kepada Yth.</div>
+    <div class="guest" id="guest-name">Tamu Undangan</div>
+    
+    <h1>Ghani & Intan</h1>
+    <p>We invite you to our wedding</p>
+    <button onclick="openInvite()">open invitation</button>
+  </div>
+  
+  <!-- MUSIC -->
+  <audio id="music" loop>
+    <source src="https://www.dropbox.com/scl/fi/qyj0nwnn7llajsuj3kfi8/lagu.mp3?rlkey=wj82waqaxwj6a4xxu76zj6dz1&st=8532xvph&dl=1" type="audio/mpeg">
+  </audio>
+  
+  <!-- CONTENT -->
+  <div id="content">
+    <div class="canva-wrapper">
+      <iframe src="https://www.canva.com/design/DAG9Wes5uww/anF2a879wvjsy7UsVni5rw/view?embed" loading="lazy" allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+  
+  <!-- MUSIC CONTROL -->
+  <button class="music-btn" onclick="toggleMusic()">♪</button>
+  
+  <script>
+    let playing = true;
+    
+    /* AMBIL NAMA TAMU DARI LINK */
+    const params = new URLSearchParams(window.location.search);
+    const guest = params.get("to");
+    if (guest) {
+      document.getElementById("guest-name").innerText =
+        decodeURIComponent(guest.replace(/\+/g, " "));
+    }
+    
+    function openInvite() {
+      const opening = document.getElementById('opening');
+      opening.parentNode.removeChild(opening);
+      
+      document.getElementById('content').style.display = 'block';
+      document.getElementById('music').play();
+    }
+    
+    function toggleMusic() {
+      const music = document.getElementById('music');
+      if (playing) music.pause();
+      else music.play();
+      playing = !playing;
+    }
+  </script>
+  
+</body>
+
+</html>
